@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStoreRequest;
+use App\Task;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
@@ -23,18 +27,31 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+//     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-        //
+        if(Auth::check()){
+            Auth::user()->tasks()->create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'category' => $request->category,
+                'anon' => 0
+            ]);
+        }
+        Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category' => $request->category,
+        ]);
+        return redirect()->route('tasks.index');
     }
 
     /**
