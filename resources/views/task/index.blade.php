@@ -29,9 +29,25 @@
                                 </button>
                             </div>
                         </form>
-                        <div>
-
-                        </div>
+                        <hr class="mt-5"/>
+                        <ul class="list-group mt-5">
+                            @foreach($data as $item)
+                                <li class="list-group-item">
+                                    @if($item->anon === 0)
+                                        <h3>
+                                            <b>Vardas:</b> {{$item->user->name}}
+                                        </h3>
+                                    @else
+                                        <h3>
+                                            <b>Vardas:</b> Anonimas
+                                        </h3>
+                                    @endif
+                                    <h4><b>Title:</b> {{$item->title}}</h4>
+                                    <p><b>Description:</b> {{$item->description}}</p><hr/>
+                                    <p><b>Category:</b> {{$item->category}}</p>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return view('task.index');
+        $data = Task::with('user')->orderBy('id', 'desc')->get();
+        return view('task.index', compact('data'));
     }
 
     /**
@@ -45,6 +46,7 @@ class TasksController extends Controller
                 'category' => $request->category,
                 'anon' => 0
             ]);
+            return redirect()->route('tasks.index');
         }
         Task::create([
             'title' => $request->title,
